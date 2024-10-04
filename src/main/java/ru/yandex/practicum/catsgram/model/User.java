@@ -1,8 +1,6 @@
 package ru.yandex.practicum.catsgram.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,17 +9,15 @@ import java.util.Objects;
 @ToString
 @Getter
 @Setter
+@EqualsAndHashCode
+@AllArgsConstructor
 public class User {
 
     private String email;
+    @EqualsAndHashCode.Exclude // исключить это поля для equals и hashcode
     private String nickname;
+    @EqualsAndHashCode.Exclude
     private LocalDate birthdate;
-
-    public User(String email, String nickname, LocalDate birthdate) {
-        this.email = email;
-        this.nickname = nickname;
-        this.birthdate = birthdate;
-    }
 
     @Override
     public boolean equals(Object o) {

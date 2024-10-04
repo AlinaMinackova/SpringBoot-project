@@ -1,9 +1,6 @@
 package ru.yandex.practicum.catsgram.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.management.ConstructorParameters;
 import java.time.Instant;
@@ -13,6 +10,7 @@ import java.time.Instant;
 @Setter
 @ToString
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Post {
 
     private final String author;
@@ -20,9 +18,5 @@ public class Post {
     private String description;
     private String photoUrl;
 
-    public Post(String author, String description, String photoUrl) {
-        this.author = author;
-        this.description = description;
-        this.photoUrl = photoUrl;
-    }
+
 }
