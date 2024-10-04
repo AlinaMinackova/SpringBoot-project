@@ -1,8 +1,16 @@
 package ru.yandex.practicum.catsgram.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+//lombok
+@ToString
+@Getter
+@Setter
 public class User {
 
     private String email;
@@ -12,30 +20,6 @@ public class User {
     public User(String email, String nickname, LocalDate birthdate) {
         this.email = email;
         this.nickname = nickname;
-        this.birthdate = birthdate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -50,14 +34,5 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(email);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", birthdate=" + birthdate +
-                '}';
     }
 }
