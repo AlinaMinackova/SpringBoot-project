@@ -6,10 +6,9 @@ import javax.management.ConstructorParameters;
 import java.time.Instant;
 
 //lombok
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+//@Data - создать все пять аннотаций только конструктор
+// будет @RequiredArgsConstructor, который добавляет только final поля
+@Data
 @AllArgsConstructor
 public class Post {
 

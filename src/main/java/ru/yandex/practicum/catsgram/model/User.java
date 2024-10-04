@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 //lombok
+//@Data - создать все пять аннотаций только конструктор
+// будет @RequiredArgsConstructor, который добавляет только final поля
 @ToString
 @Getter
 @Setter
