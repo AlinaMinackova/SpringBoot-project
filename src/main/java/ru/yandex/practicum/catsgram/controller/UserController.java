@@ -2,10 +2,13 @@ package ru.yandex.practicum.catsgram.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.exception.InvalidEmailException;
 import ru.yandex.practicum.catsgram.exception.UserAlreadyExistException;
 import ru.yandex.practicum.catsgram.model.User;
+import ru.yandex.practicum.catsgram.service.PostService;
+import ru.yandex.practicum.catsgram.service.UserService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,43 +19,27 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private static final Logger log  = LoggerFactory.getLogger(UserController.class);
-
     private HashMap<String, User> users = new HashMap<>();
+
+    private final UserService userService; //класс сервиса
+
+    @Autowired // класс UserService зависимость
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("")
     public HashMap<String, User> findAll(){
-        log.info("Количество пользователей: {}", users.size());
-        return users;
+        return userService.findAll();
     }
 
     @PostMapping(value = "")
     public User create(@RequestBody User user){
-        if (user.getEmail().equals("") || user.getEmail() == null){
-            throw new InvalidEmailException("InvalidEmailException");
-        }
-        if (!users.containsKey(user.getEmail())) {
-            log.info("Добавлен пользователь: {}", user);
-            users.put(user.getEmail(), user);
-            return user;
-        }
-        else {
-            throw new UserAlreadyExistException("UserAlreadyExistException");
-        }
+        return userService.create(user);
     }
 
     @PutMapping("")
     public User update(@RequestBody User user){
-        if (user.getEmail() == null || user.getEmail().equals("")){
-            throw new InvalidEmailException("InvalidEmailException");
-        }
-        if (!users.containsKey(user.getEmail())) {
-            users.put(user.getEmail(), user);
-        } else {
-            User user1 = users.get(user.getEmail());
-            user1.setBirthdate(user.getBirthdate());
-            user1.setNickname(user.getNickname());
-        }
-        return user;
+        return userService.update(user);
     }
 }

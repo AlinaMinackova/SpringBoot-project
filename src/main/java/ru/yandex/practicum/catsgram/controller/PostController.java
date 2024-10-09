@@ -1,30 +1,34 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.Post;
+import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class PostController {
 
-    private static final Logger log  = LoggerFactory.getLogger(PostController.class);
+    private final PostService postService; //класс сервиса
 
-    private List<Post> posts = new ArrayList<>();
+    @Autowired // класс PostService зависимость
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping("/posts")
     public List<Post> findAll(){
-        log.info("Количество постов: {}", posts.size());
-        return posts;
+        return postService.findAll(); // вызывает метод зависимости
     }
 
     @PostMapping(value = "/post")
     public Post create(@RequestBody Post post){
-        log.info("Добавлен пост: {}", post);
-        posts.add(post);
-        return post;
+        return postService.create(post); // вызывает метод зависимости
     }
 }
