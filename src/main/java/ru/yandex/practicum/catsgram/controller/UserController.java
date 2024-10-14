@@ -3,23 +3,23 @@ package ru.yandex.practicum.catsgram.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.catsgram.exception.InvalidEmailException;
 import ru.yandex.practicum.catsgram.exception.UserAlreadyExistException;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.PostService;
 import ru.yandex.practicum.catsgram.service.UserService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private HashMap<String, User> users = new HashMap<>();
+    private final HashMap<String, User> users = new HashMap<>();
 
     private final UserService userService; //класс сервиса
 
@@ -33,8 +33,14 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/{email}")
+    public User findByEmail(@PathVariable String email){ //@PathVariable - переменная пути
+        // принять значение из пути (имена совпадают!)
+        return userService.findByEmail(email);
+    }
+
     @PostMapping(value = "")
-    public User create(@RequestBody User user){
+    public User create(@RequestBody User user){ //@RequestBody принять значение из body
         return userService.create(user);
     }
 

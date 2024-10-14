@@ -12,6 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class Post {
 
+    private Integer id;
     private final String author;
     private final Instant creationDate = Instant.now();
     private String description;

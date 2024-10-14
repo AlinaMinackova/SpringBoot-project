@@ -20,11 +20,16 @@ public class UserService {
 
     private static final Logger log  = LoggerFactory.getLogger(UserController.class);
 
-    private HashMap<String, User> users = new HashMap<>();
+    private final HashMap<String, User> users = new HashMap<>();
 
     public HashMap<String, User> findAll(){
         log.info("Количество пользователей: {}", users.size());
         return users;
+    }
+
+    public User findByEmail(String email){
+        log.info("Получен пользователь с email: {}", email);
+        return users.get(email);
     }
 
     public User create(User user){
