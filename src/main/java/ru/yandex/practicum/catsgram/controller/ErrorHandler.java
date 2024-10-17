@@ -38,9 +38,9 @@ public class ErrorHandler {
         //}
         //ниже пример
     }
-
-    @ExceptionHandler({UserAlreadyExistException.class, InvalidEmailException.class})
-    public ResponseStatusException handleException2(RuntimeException exception) {
-        return new ResponseStatusException(HttpStatus.BAD_REQUEST, "описание ошибки");
-    }
+//
+//    @ExceptionHandler({UserAlreadyExistException.class, InvalidEmailException.class})
+//    public ResponseStatusException handleException2(RuntimeException exception) {
+//        return new ResponseStatusException(HttpStatus.BAD_REQUEST, "описание ошибки");
+//    }
 }

@@ -19,8 +19,6 @@ import java.util.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private final HashMap<String, User> users = new HashMap<>();
-
     private final UserService userService; //класс сервиса
 
     @Autowired // класс UserService зависимость
