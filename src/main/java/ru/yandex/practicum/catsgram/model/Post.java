@@ -4,19 +4,32 @@ import lombok.*;
 
 import javax.management.ConstructorParameters;
 import java.time.Instant;
+import java.time.LocalDate;
 
 //lombok
 //@Data - создать все пять аннотаций только конструктор
 // будет @RequiredArgsConstructor, который добавляет только final поля
 @Data
-@AllArgsConstructor
-public class Post {
+public class Post{
 
     private Integer id;
-    private final String author;
-    private final Instant creationDate = Instant.now();
+    private final User author;
+    private final LocalDate creationDate;
     private String description;
     private String photoUrl;
 
+    public Post(User author, String description, String photoUrl) {
+        this.author = author;
+        this.description = description;
+        this.photoUrl = photoUrl;
+        this.creationDate = LocalDate.now();
+    }
 
+    public Post(Integer id, User author, LocalDate creationDate, String description, String photoUrl) {
+        this.id = id;
+        this.author = author;
+        this.creationDate = creationDate;
+        this.description = description;
+        this.photoUrl = photoUrl;
+    }
 }

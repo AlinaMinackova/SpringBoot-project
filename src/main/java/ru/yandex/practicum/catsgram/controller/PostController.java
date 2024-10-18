@@ -13,6 +13,7 @@ import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,33 +31,35 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<Post> findAll(@RequestParam(value="size", defaultValue="10") String size,
-                              @RequestParam(value="from", defaultValue="1") String from){
+    public Collection<Post> findAll(@RequestParam(value="size", defaultValue="10") String size,
+                              @RequestParam(value="sort", defaultValue="asc") String sort){
         // @RequestParam - параметр запроса (автор=Том)
         // @RequestParam(value="size", defaultValue="10") - значение по умолчанию
-        return postService.findAll(Integer.parseInt(size), Integer.parseInt(from)); // вызывает метод зависимости;
+        return postService.findAll(Integer.parseInt(size), sort); // вызывает метод зависимости;
     }
 
-    @GetMapping("/posts/{postId}")
-    public Optional<Post> findById(@PathVariable int postId){ //@PathVariable - переменная пути
-        // принять значение из пути (имена совпадают!)
-        return postService.findById(postId);
-    }
-
-    @GetMapping("/posts/{author}/search")
-    public void findByListAuthor(
-            @PathVariable int author, //@PathVariable - переменная пути
-            @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate from,
-            // @RequestParam - параметр запроса (автор=Том)
-            //@DateTimeFormat сразу преобразовать в дату
-            @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate to
-    ){
+    @GetMapping("/posts/author")
+    public Collection<Post> findAllByAuthor(@RequestParam String author_id){
         System.out.println("пример работы с параметрами запроса");
-    }
-
-
-    @PostMapping(value = "/post")
-    public Post create(@RequestBody Post post){ //@RequestBody принять значение из body
-        return postService.create(post); // вызывает метод зависимости
+        return postService.findAllByUser(author_id);
     }
 }
+//
+//    @GetMapping("/posts/{postId}")
+//    public Optional<Post> findById(@PathVariable int postId){ //@PathVariable - переменная пути
+//        // принять значение из пути (имена совпадают!)
+//        return postService.findById(postId);
+//    }
+//
+//    @GetMapping("/posts/{author}/search")
+//    public void findByListAuthor(
+//            @PathVariable int author, //@PathVariable - переменная пути
+//            @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate from,
+//            // @RequestParam - параметр запроса (автор=Том)
+//            //@DateTimeFormat сразу преобразовать в дату
+//            @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate to
+//    ){
+//        System.out.println("пример работы с параметрами запроса");
+//    }
+
+

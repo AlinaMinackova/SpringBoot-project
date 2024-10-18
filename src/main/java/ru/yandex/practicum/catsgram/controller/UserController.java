@@ -27,12 +27,13 @@ public class UserController {
     }
 
     @GetMapping("")
-    public HashMap<String, User> findAll(){
+    public Collection<User> findAll(){
         return userService.findAll();
     }
 
     @GetMapping("/{email}")
-    public User findByEmail(@PathVariable String email){ //@PathVariable - переменная пути
+    public Optional<User> findByEmail(@PathVariable String email){
+        //@PathVariable - переменная пути
         // принять значение из пути (имена совпадают!)
         return userService.findByEmail(email);
     }

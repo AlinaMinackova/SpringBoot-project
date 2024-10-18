@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.catsgram.exception.InvalidEmailException;
 import ru.yandex.practicum.catsgram.exception.UserAlreadyExistException;
+import ru.yandex.practicum.catsgram.exception.UserNotFoundException;
 
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 //можно указать конкретный класс
 public class ErrorHandler {
 
-    @ExceptionHandler({UserAlreadyExistException.class, InvalidEmailException.class})
+    @ExceptionHandler({UserAlreadyExistException.class, InvalidEmailException.class, UserNotFoundException.class})
     //перехватывает ошибку и отправляет сообщение понятное для пользователя
     @ResponseStatus(HttpStatus.BAD_REQUEST) //если не пометить метод такой аннотацией, то
     //даже при ответе с ошибкой статус будет 200, а теперь 400
