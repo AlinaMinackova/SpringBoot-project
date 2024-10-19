@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,28 +29,28 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
         SqlRowSet userRow = jdbcTemplate.queryForRowSet( "SELECT * FROM cat_user WHERE email = ?", email);
         if (userRow.next()){
             User user = new User(
                     userRow.getString("email"),
                     userRow.getString("nickname"),
                     LocalDate.parse(userRow.getString("birthday")));
-            return Optional.of(user);
+            return user;
         }
-        return Optional.empty();
+        return null;
     }
 
     @Override
-    public Collection<User> findAll() {
+    public List<User> findAll() {
         String sql = "select * from cat_user";
         return jdbcTemplate.query(sql, (rs, rowNum) -> makeUser(rs));
     }
 
     @Override
     public User create(User user) {
-        Optional<User> user1 = findByEmail(user.getEmail());
-        if(user1.isPresent()){
+        User user1 = findByEmail(user.getEmail());
+        if(user1 == null){
             throw new UserAlreadyExistException("UserAlreadyExistException");
         } String sql = "insert into cat_user (email, nickname, birthday) values (?, ?, ?)";
         jdbcTemplate.update(sql, user.getEmail(), user.getNickname(), user.getBirthday());
@@ -59,8 +60,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        Optional<User> user1 = findByEmail(user.getEmail());
-        if(user1.isEmpty()){
+        User user1 = findByEmail(user.getEmail());
+        if(user1 == null){
             throw new UserNotFoundException("UserNotFoundException");
         } String sql = "update cat_user set (nickname, birthday) = (?, ?) where email = ?";
         jdbcTemplate.update(sql, user.getNickname(), user.getBirthday(), user.getEmail());

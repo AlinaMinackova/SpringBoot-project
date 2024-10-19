@@ -31,7 +31,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public Collection<Post> findAll(@RequestParam(value="size", defaultValue="10") String size,
+    public List<Post> findAll(@RequestParam(value="size", defaultValue="10") String size,
                               @RequestParam(value="sort", defaultValue="asc") String sort){
         // @RequestParam - параметр запроса (автор=Том)
         // @RequestParam(value="size", defaultValue="10") - значение по умолчанию
@@ -39,7 +39,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/author")
-    public Collection<Post> findAllByAuthor(@RequestParam String author_id){
+    public List<Post> findAllByAuthor(@RequestParam String author_id){
         System.out.println("пример работы с параметрами запроса");
         return postService.findAllByUser(author_id);
     }

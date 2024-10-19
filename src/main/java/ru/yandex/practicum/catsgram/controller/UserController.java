@@ -27,12 +27,12 @@ public class UserController {
     }
 
     @GetMapping("")
-    public Collection<User> findAll(){
+    public List<User> findAll(){
         return userService.findAll();
     }
 
     @GetMapping("/{email}")
-    public Optional<User> findByEmail(@PathVariable String email){
+    public User findByEmail(@PathVariable String email){
         //@PathVariable - переменная пути
         // принять значение из пути (имена совпадают!)
         return userService.findByEmail(email);

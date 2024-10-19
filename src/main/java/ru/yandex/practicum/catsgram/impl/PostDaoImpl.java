@@ -12,10 +12,7 @@ import ru.yandex.practicum.catsgram.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class PostDaoImpl implements PostDao {
@@ -29,13 +26,13 @@ public class PostDaoImpl implements PostDao {
 
 
     @Override
-    public Collection<Post> findAllByUser(User user) {
-        String sql = "select * from cat_post where author = ? order by create_date desc";
+    public List<Post> findAllByUser(User user) {
+        String sql = "select * from cat_post where author = ? order by create_date asc";
         return jdbcTemplate.query(sql, (rs, rowNum) -> makePost(rs, user), user.getEmail());
     }
 
     @Override
-    public Collection<Post> findAll(Integer size, String sort, Collection<User> users) {
+    public List<Post> findAll(Integer size, String sort, List<User> users) {
         String sql = "select * from cat_post order by create_date " + sort + " limit " + size;
         return jdbcTemplate.query(sql, new RowMapper<Post>() {
             @Override

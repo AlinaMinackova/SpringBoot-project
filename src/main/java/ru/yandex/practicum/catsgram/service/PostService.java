@@ -10,6 +10,7 @@ import ru.yandex.practicum.catsgram.model.User;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service // делает тоже самое, что и @Component, только для класса с логикой
@@ -26,13 +27,16 @@ public class PostService {
         this.userService = userService;
     }
 
-        public Collection<Post> findAll(int size, String sort){
+        public List<Post> findAll(int size, String sort){
         log.info("Получить {} постов", size);
         return postDao.findAll(size, sort, userService.findAll());
     }
 
-    public Collection<Post> findAllByUser(String userId){
-        User user = userService.findByEmail(userId).orElseThrow(() -> new UserNotFoundException("пользователь с данным id не найден"));
+    public List<Post> findAllByUser(String userId){
+        User user = userService.findByEmail(userId);
+        if (user == null){
+            throw  new UserNotFoundException("пользователь с данным id не найден");
+        }
         log.info("Получен пост от пользователя {}", userId);
         return postDao.findAllByUser(user);
     }

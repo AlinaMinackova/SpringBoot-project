@@ -4,10 +4,11 @@ import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface PostDao {
 
-    Collection<Post> findAllByUser(User user);
-    Collection<Post> findAll(Integer size, String sort, Collection<User> users);
+    List<Post> findAllByUser(User user);
+    List<Post> findAll(Integer size, String sort, List<User> users);
 }

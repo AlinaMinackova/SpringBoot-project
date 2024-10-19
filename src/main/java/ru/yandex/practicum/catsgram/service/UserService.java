@@ -10,6 +10,7 @@ import ru.yandex.practicum.catsgram.exception.InvalidEmailException;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service // делает тоже самое, что и @Component, только для класса с логикой
@@ -25,13 +26,13 @@ public class UserService {
     }
 
 
-    public Optional<User> findByEmail(String email){
+    public User findByEmail(String email){
         log.info("Получен пользователь с email: {}", email);
         return userDao.findByEmail(email);
     }
 
 
-    public Collection<User> findAll(){
+    public List<User> findAll(){
         return userDao.findAll();
     }
 
